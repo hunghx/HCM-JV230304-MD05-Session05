@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ra.hunghx.dto.request.FormLogin;
 import ra.hunghx.dto.request.FormRegister;
 import ra.hunghx.dto.response.JwtResponse;
 import ra.hunghx.service.IAuthenticationService;
@@ -20,5 +21,9 @@ public class AuthenticationController {
     public ResponseEntity<JwtResponse> register(@RequestBody FormRegister request){
        JwtResponse response = authenticationService.register(request);
        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<JwtResponse> login(@RequestBody FormLogin reuqest){
+        return new ResponseEntity<>(authenticationService.login(reuqest), HttpStatus.CREATED);
     }
 }

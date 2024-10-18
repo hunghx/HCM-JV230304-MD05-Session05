@@ -31,8 +31,8 @@ public class SecurityConfig { // cấu hình bảo mật
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsServiceCustom);
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
+            authenticationProvider.setUserDetailsService(userDetailsServiceCustom);
+            authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
     @Bean
@@ -44,6 +44,7 @@ public class SecurityConfig { // cấu hình bảo mật
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // phi trạng thai
+                .exceptionHandling(ex->ex.accessDeniedHandler(new DeniedHandler()))
                 .authorizeHttpRequests( // phaan quyeenf theo duong dan
                         auth -> auth.requestMatchers("/api/v1/auth/**").permitAll() // ko caanf xac thuc
                                 .requestMatchers("/api/v1/user/**").hasAuthority("ROLE_USER") // chir co User ms truy cam
